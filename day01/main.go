@@ -24,6 +24,7 @@ func main() {
 	slices.Sort(right)
 
 	fmt.Println("distances sum is:", sumDistances(left, right))
+	fmt.Println("similarity score is:", scoreSimilarity(left, right))
 }
 
 func sumDistances(left, right []int) int {
@@ -58,4 +59,20 @@ func parseInput(file io.Reader) (left []int, right []int) {
 
 	adventofcode.Assert(len(left) == len(right), "left and right slices have different sizes")
 	return left, right
+}
+
+func countOccurences(num int, s []int) (count int) {
+	for _, value := range s {
+		if num == value {
+			count++
+		}
+	}
+	return count
+}
+
+func scoreSimilarity(left, right []int) (score int) {
+	for _, leftNum := range left {
+		score += countOccurences(leftNum, right) * leftNum
+	}
+	return score
 }
