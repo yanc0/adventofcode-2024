@@ -26,3 +26,10 @@ func TestSumDistances(t *testing.T) {
 
 	adventofcode.Assert(sumDistances(left, right) == 3, "distance must be 3")
 }
+
+func TestSimilarityScore(t *testing.T) {
+	left := []int{1, 3, 4}
+	right := []int{4, 3, 3}
+
+	adventofcode.Assert(scoreSimilarity(left, right) == 10, "distance must be 10", )
+}
