@@ -6,6 +6,7 @@ import (
 	"embed"
 	"fmt"
 	"io"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -19,9 +20,9 @@ func main() {
 		panic(err) // should not panic
 	}
 
-	safeReports := 0
 	reports := parseReports(file)
 
+	safeReports := 0
 	for _, report := range reports {
 		if isReportSafe(report) {
 			safeReports++
@@ -29,6 +30,15 @@ func main() {
 	}
 
 	fmt.Println("number of safe reports:", safeReports)
+
+	safeReports = 0
+	for _, report := range reports {
+		if isReportSafeRemovingOneLevel(report) {
+			safeReports++
+		}
+	}
+	fmt.Println("number of safe reports removing one bad level:", safeReports)
+
 }
 
 func parseReports(file io.Reader) [][]int {
@@ -53,15 +63,17 @@ func parseReports(file io.Reader) [][]int {
 	return reports
 }
 
-type ReportWay string
+type ReportWay int
 
 const (
-	Ascending  ReportWay = "asc"
-	Descending ReportWay = "desc"
-	Unknown    ReportWay = "unkn"
+	Ascending ReportWay = iota
+	Descending
+	Unknown
 )
 
-func isReportSafe(report []int) bool {
+// badLevel returns the position of the first bad level
+// found in a report. Returns 0 if no bad level are found
+func badLevel(report []int) int {
 	way := Unknown
 	for i, level := range report {
 		if i == 0 {
@@ -76,25 +88,50 @@ func isReportSafe(report []int) bool {
 				way = Ascending
 			}
 			if report[i-1] == level {
-				return false
+				return i
 			}
 		}
 
 		if way == Ascending && report[i-1] >= level {
-			return false
+			return i
 		}
 
 		if way == Descending && report[i-1] <= level {
-			return false
+			return i
 		}
 
 		if way == Ascending && level-report[i-1] > 3 {
-			return false
+			return i
 		}
 
 		if way == Descending && report[i-1]-level > 3 {
-			return false
+			return i
 		}
 	}
+	return 0
+}
+
+func isReportSafe(report []int) bool {
+	return badLevel(report) == 0
+}
+
+func isReportSafeRemovingOneLevel(report []int) bool {
+	if index := badLevel(report); index > 0 {
+		if isReportSafe(deleteLevel(report, index-1)) {
+			return true
+		}
+
+		if isReportSafe(deleteLevel(report, index)) {
+			return true
+		}
+
+		return false
+	}
 	return true
+}
+
+func deleteLevel(report []int, index int) []int {
+	reportCopy := make([]int, len(report))
+	copy(reportCopy, report)
+	return slices.Delete(reportCopy, index, index+1)
 }
