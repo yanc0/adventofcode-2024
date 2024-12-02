@@ -6,3 +6,5 @@
 * Sort both slices
 * Sum all number distances
 * Part 2: calculate a similarity score
+
+## Day 2
