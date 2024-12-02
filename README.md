@@ -8,3 +8,6 @@
 * Part 2: calculate a similarity score
 
 ## Day 2
+
+* Parse reports and levels
+* Track down all reports that seems wrong
