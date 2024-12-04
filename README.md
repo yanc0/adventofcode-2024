@@ -27,3 +27,10 @@
 
 * Created my first scanner and parser
 * Parser is weirdly implemented but it works \o/
+
+### Day 4: Ceres Search
+
+[Story](https://adventofcode.com/2024/day/4)
+
+* Simple implementation, maybe slow at scale
+* I think the code is readable
