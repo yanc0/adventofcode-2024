@@ -34,3 +34,10 @@
 
 * Simple implementation, maybe slow at scale
 * I think the code is readable
+
+### Day 5: Print Queue
+
+[Story](https://adventofcode.com/2024/day/5)
+
+* Rules validation is ok IMHO
+* Part 2 is sloooooooow af.
