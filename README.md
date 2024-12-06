@@ -41,3 +41,11 @@
 
 * Rules validation is ok IMHO
 * Part 2 is sloooooooow af.
+
+### Day 6: Guard Gallivant
+
+[Story](https://adventofcode.com/2024/day/6)
+
+* Fun little game
+* I bruteforced the search for infinite loop scenarios
+* Code takes 2 minutes to complete
