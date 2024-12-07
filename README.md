@@ -49,3 +49,10 @@
 * Fun little game
 * I bruteforced the search for infinite loop scenarios
 * Code takes 2 minutes to complete
+
+### Day 7: Bridge Repair
+
+[Story](https://adventofcode.com/2024/day/7)
+
+* Recursivity ftw \o/
+* nice, clean and performant code
