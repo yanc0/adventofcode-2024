@@ -56,3 +56,11 @@
 
 * Recursivity ftw \o/
 * nice, clean and performant code
+
+## Day 8: Resonant Collinearity
+
+[Story](https://adventofcode.com/2024/day/7)
+
+* Playing with vectors is somewhat fun
+* Complex problem with elegant mathematical solution
+* Crazy fast
