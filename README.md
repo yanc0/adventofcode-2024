@@ -1,10 +1,14 @@
 # Advent Of Code - 2024
 
-## Test
+## Build
 
-    $ go build -o app aoc/day01 && ./app
+    $ go build -o app aoc/day01 && ./app -input=path/to/your/input.txt
 
-## Day 1: Historian Hysteria
+## Test suite
+
+    $ go test -v  ./...
+
+### Day 1: Historian Hysteria
 
 [Story](https://adventofcode.com/2024/day/1)
 
@@ -56,7 +60,7 @@
 * Recursivity ftw \o/
 * nice, clean and performant code
 
-## Day 8: Resonant Collinearity
+### Day 8: Resonant Collinearity
 
 [Story](https://adventofcode.com/2024/day/8)
 
@@ -64,7 +68,7 @@
 * Complex problem with elegant mathematical solution
 * Crazy fast
 
-## Day 9: Disk Fragmenter
+### Day 9: Disk Fragmenter
 
 [Story](https://adventofcode.com/2024/day/9)
 
