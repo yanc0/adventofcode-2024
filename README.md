@@ -2,8 +2,7 @@
 
 ## Test
 
-    $ go build -o day01 aoc/day01
-    $ ./day01
+    $ go build -o app aoc/day01 && ./app
 
 ## Day 1: Historian Hysteria
 
@@ -59,8 +58,15 @@
 
 ## Day 8: Resonant Collinearity
 
-[Story](https://adventofcode.com/2024/day/7)
+[Story](https://adventofcode.com/2024/day/8)
 
 * Playing with vectors is somewhat fun
 * Complex problem with elegant mathematical solution
 * Crazy fast
+
+## Day 9: Disk Fragmenter
+
+[Story](https://adventofcode.com/2024/day/9)
+
+* Simple algorithm for a simple problem
+* Quite fast

@@ -19,9 +19,11 @@ func main() {
 	}
 	denseFormat := parseInput(f)
 	diskFormat := DiskMap(denseFormat)
-	compacted := Compact(diskFormat)
+	compactedv1 := CompactV1(diskFormat)
+	compactedv2 := CompactV2(diskFormat)
 
-	fmt.Println("disk compacted", IsCompacted(compacted), ", checksum: ", Checksum(compacted))
+	fmt.Println("compaction algorithm v1 checksum: ", Checksum(compactedv1))
+	fmt.Println("compaction algorithm v2 checksum: ", Checksum(compactedv2))
 
 }
 
@@ -81,13 +83,48 @@ func lastDataBlockIndex(diskmap []int) int {
 	return -1
 }
 
+func findFile(diskmap []int, id int) (idx, size int) {
+	size = 0
+	idx = -1
+	for i := 0; i < len(diskmap); i++ {
+		firstBlockOfFile := diskmap[i] == id && idx == -1
+		if firstBlockOfFile {
+			idx = i
+			size = 1
+			for j := 1; j < len(diskmap)-i; j++ {
+				if diskmap[i+j] != id {
+					return idx, size
+				}
+				size++
+			}
+		}
+	}
+	return idx, size
+}
+
 func Switch(diskmap []int, from int, to int) {
 	tmp := diskmap[to]
 	diskmap[to] = diskmap[from]
 	diskmap[from] = tmp
 }
 
-func Compact(diskmap []int) []int {
+func MoveBlock(diskmap []int, from int, size int, to int) {
+	for i := 0; i < size; i++ {
+		Switch(diskmap, from+i, to+i)
+	}
+}
+
+func HighestID(diskmap []int) int {
+	max := -1
+	for i := 0; i < len(diskmap); i++ {
+		if diskmap[i] > max {
+			max = diskmap[i]
+		}
+	}
+	return max
+}
+
+func CompactV1(diskmap []int) []int {
 	disk := make([]int, len(diskmap))
 	copy(disk, diskmap)
 
@@ -99,6 +136,25 @@ func Compact(diskmap []int) []int {
 			break
 		}
 		Switch(disk, ldbi, ffsi)
+	}
+
+	return disk
+}
+
+func CompactV2(diskmap []int) []int {
+	disk := make([]int, len(diskmap))
+	copy(disk, diskmap)
+
+	for id := HighestID(diskmap); id >= 0; id-- {
+		fileIdx, fileSize := findFile(disk, id)
+		freeSpaceIdx := FirstFreeContiguousSpace(disk, fileSize)
+		noSpaceLeft := freeSpaceIdx == -1
+		freeSpaceOnlyAfterFile := freeSpaceIdx > fileIdx
+		if noSpaceLeft || freeSpaceOnlyAfterFile {
+			continue
+		}
+
+		MoveBlock(disk, fileIdx, fileSize, freeSpaceIdx)
 	}
 
 	return disk
@@ -139,4 +195,21 @@ func DiskMapToString(diskmap []int) string {
 		s += fmt.Sprintf("%d", diskmap[i])
 	}
 	return s
+}
+
+func FirstFreeContiguousSpace(diskmap []int, size int) (index int) {
+	for i := 0; i < len(diskmap)-size; i++ {
+		foundNonEmpty := false
+		for _, v := range diskmap[i : i+size] {
+			if v != EMPTY {
+				foundNonEmpty = true
+				break
+			}
+		}
+		if foundNonEmpty {
+			continue
+		}
+		return i
+	}
+	return -1
 }
