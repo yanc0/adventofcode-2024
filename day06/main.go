@@ -1,25 +1,16 @@
 package main
 
 import (
+	. "aoc"
 	"bufio"
-	"embed"
 	"errors"
 	"fmt"
 	"io"
-	"log"
 )
 
-//go:embed *.txt
-var input embed.FS
-
 func main() {
-	f, err := input.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	originalMap := parseInput(InputFile())
 
-	originalMap := parseInput(f)
-	
 	m := originalMap.Clone()
 	for {
 		err := m.NextFrame()

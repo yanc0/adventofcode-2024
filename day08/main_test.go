@@ -2,27 +2,30 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"strings"
 	"testing"
 )
 
-func TestInput(t *testing.T) {
-	f, err := input.Open("test_input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+var testInput = `......#....#
+...#....0...
+....#0....#.
+..#....0....
+....0....#..
+.#....A.....
+...#........
+#......#....
+........A...
+.........A..
+..........#.
+..........#.`
 
-	antennas := parseInput(f)
+func TestInput(t *testing.T) {
+	antennas := parseInput(strings.NewReader(testInput))
 	_ = antennas
 }
 
 func TestAntennasAntinodes(t *testing.T) {
-	f, err := input.Open("test_input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	antennas := parseInput(f)
+	antennas := parseInput(strings.NewReader(testInput))
 	antinodes := NewAntinodesMap(len(antennas))
 	antinodes.Mark(antennas.CalculateAntinodesForFreqV1('0')...)
 	fmt.Println(antinodes.Count())

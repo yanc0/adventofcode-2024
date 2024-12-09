@@ -1,7 +1,7 @@
 package main
 
 import (
-	adventofcode "aoc"
+	. "aoc"
 	"slices"
 	"strings"
 	"testing"
@@ -16,20 +16,20 @@ func TestParseInput(t *testing.T) {
 	slices.Sort(left)
 	slices.Sort(right)
 
-	adventofcode.Assert(len(left) == 3, "left slice length must be 3")
-	adventofcode.Assert(len(right) == 3, "right slice length must be 3")
+	Assert(len(left) == 3, "left slice length must be 3")
+	Assert(len(right) == 3, "right slice length must be 3")
 }
 
 func TestSumDistances(t *testing.T) {
 	left := []int{1, 2, 4}
 	right := []int{2, 3, 3}
 
-	adventofcode.Assert(sumDistances(left, right) == 3, "distance must be 3")
+	Assert(sumDistances(left, right) == 3, "distance must be 3")
 }
 
 func TestSimilarityScore(t *testing.T) {
 	left := []int{1, 3, 4}
 	right := []int{4, 3, 3}
 
-	adventofcode.Assert(scoreSimilarity(left, right) == 10, "distance must be 10", )
+	Assert(scoreSimilarity(left, right) == 10, "distance must be 10")
 }

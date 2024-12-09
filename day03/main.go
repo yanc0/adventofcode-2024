@@ -1,21 +1,14 @@
 package main
 
 import (
-	"embed"
+	. "aoc"
 	"fmt"
-	"log"
 	"os"
 )
 
-//go:embed input.txt
-var input embed.FS
-
 func main() {
-	f, err := input.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	parser := NewParser(NewScanner(f))
+
+	parser := NewParser(NewScanner(InputFile()))
 
 	total := int64(0)
 	for {

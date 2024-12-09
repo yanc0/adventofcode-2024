@@ -1,22 +1,15 @@
 package main
 
 import (
+	. "aoc"
 	"bufio"
-	"embed"
 	"fmt"
 	"io"
-	"log"
 )
 
-//go:embed *.txt
-var input embed.FS
-
 func main() {
-	f, err := input.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	antennas := parseInput(f)
+
+	antennas := parseInput(InputFile())
 	// part 1
 	fmt.Println(antennas.AntinodesV1())
 	fmt.Printf("there are %d antinodes on the map with model v1\n", antennas.AntinodesV1().Count())

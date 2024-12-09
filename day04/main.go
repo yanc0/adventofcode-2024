@@ -1,22 +1,15 @@
 package main
 
 import (
+	. "aoc"
 	"bufio"
-	"embed"
 	"fmt"
 	"io"
-	"log"
 )
 
-//go:embed input.txt
-var input embed.FS
-
 func main() {
-	f, err := input.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	grid := parseInput(f)
+
+	grid := parseInput(InputFile())
 	count := 0
 	orders := []Order{
 		HorizontalForward,

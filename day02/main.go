@@ -1,9 +1,8 @@
 package main
 
 import (
-	adventofcode "aoc"
+	. "aoc"
 	"bufio"
-	"embed"
 	"fmt"
 	"io"
 	"slices"
@@ -11,16 +10,8 @@ import (
 	"strings"
 )
 
-//go:embed input.txt
-var input embed.FS
-
 func main() {
-	file, err := input.Open("input.txt")
-	if err != nil {
-		panic(err) // should not panic
-	}
-
-	reports := parseReports(file)
+	reports := parseReports(InputFile())
 
 	safeReports := 0
 	for _, report := range reports {
@@ -48,12 +39,12 @@ func parseReports(file io.Reader) [][]int {
 	for scanner.Scan() {
 		reportLine := scanner.Text()
 		levelsStr := strings.Split(reportLine, " ")
-		adventofcode.Assert(len(levelsStr) >= 2, "report line must at least 2 levels")
+		Assert(len(levelsStr) >= 2, "report line must at least 2 levels")
 
 		levels := make([]int, 0)
 		for _, levelStr := range levelsStr {
 			level, err := strconv.Atoi(levelStr)
-			adventofcode.Assert(err == nil, "level must be int:", err)
+			Assert(err == nil, "level must be int:", err)
 			levels = append(levels, level)
 		}
 

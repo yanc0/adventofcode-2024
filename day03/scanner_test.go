@@ -1,7 +1,7 @@
 package main
 
 import (
-	adventofcode "aoc"
+	. "aoc"
 	"strings"
 	"testing"
 )
@@ -27,16 +27,16 @@ func TestParse(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	adventofcode.Assert(n == 417276, "n != 417276")
+	Assert(n == 417276, "n != 417276")
 
 	n, err = parser.Parse()
 	if err != nil {
 		t.Fatal(err)
 	}
-	adventofcode.Assert(n == 265095, "n != 265095")
+	Assert(n == 265095, "n != 265095")
 
 	_, err = parser.Parse()
 	if err != nil {
-		adventofcode.Assert(err.Error() == "eof", "expecting eof")
+		Assert(err.Error() == "eof", "expecting eof")
 	}
 }

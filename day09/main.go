@@ -1,23 +1,14 @@
 package main
 
 import (
-	adventofcode "aoc"
+	. "aoc"
 	"bufio"
-	"embed"
 	"fmt"
 	"io"
-	"log"
 )
 
-//go:embed *.txt
-var input embed.FS
-
 func main() {
-	f, err := input.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	denseFormat := parseInput(f)
+	denseFormat := parseInput(InputFile())
 	diskFormat := DiskMap(denseFormat)
 	compactedv1 := CompactV1(diskFormat)
 	compactedv2 := CompactV2(diskFormat)
@@ -35,7 +26,7 @@ func parseInput(input io.Reader) []int {
 		if scanner.Text() == "\n" {
 			break
 		}
-		nums = append(nums, adventofcode.Int(scanner.Text()))
+		nums = append(nums, Int(scanner.Text()))
 	}
 	return nums
 }

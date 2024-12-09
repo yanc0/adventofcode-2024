@@ -1,27 +1,17 @@
 package main
 
 import (
-	adventofcode "aoc"
+	. "aoc"
 	"bufio"
-	"embed"
 	"fmt"
 	"io"
-	"log"
 	"slices"
 	"strconv"
 	"strings"
 )
 
-//go:embed input.txt
-var input embed.FS
-
 func main() {
-	f, err := input.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	rules, updates := parseInput(f)
+	rules, updates := parseInput(InputFile())
 
 	total := 0
 	totalFixed := 0
@@ -47,12 +37,12 @@ func parseInput(input io.Reader) (Rules, Updates) {
 			break
 		}
 		splited := strings.Split(line, "|")
-		adventofcode.Assert(len(splited) == 2, "rule must be separated by |")
+		Assert(len(splited) == 2, "rule must be separated by |")
 
 		num, err := strconv.Atoi(splited[0])
-		adventofcode.Assert(err == nil, "first num should be integer", err)
+		Assert(err == nil, "first num should be integer", err)
 		before, err := strconv.Atoi(splited[1])
-		adventofcode.Assert(err == nil, "second num should be integer", err)
+		Assert(err == nil, "second num should be integer", err)
 
 		rules[num] = append(rules[num], before)
 	}
@@ -69,7 +59,7 @@ func ConvertToInts(strs []string) []int {
 	ints := make([]int, len(strs))
 	for i, str := range strs {
 		num, err := strconv.Atoi(str)
-		adventofcode.Assert(err == nil, "str should be integer convertible", err)
+		Assert(err == nil, "str should be integer convertible", err)
 		ints[i] = num
 	}
 	return ints
@@ -102,7 +92,7 @@ func (updates Updates) AtIndex(index int) Update {
 func (u Update) MiddlePageNumber() int {
 	isOdd := len(u)%2 == 1
 	containsAtLeastOnePage := len(u) > 0
-	adventofcode.Assert(isOdd && containsAtLeastOnePage, "update must contain an odd number of pages")
+	Assert(isOdd && containsAtLeastOnePage, "update must contain an odd number of pages")
 	return u[len(u)/2]
 }
 
