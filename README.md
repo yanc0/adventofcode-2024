@@ -74,3 +74,11 @@
 
 * Simple algorithm for a simple problem
 * Quite fast
+
+### Day 10: Hoof It
+
+[Story](https://adventofcode.com/2024/day/10)
+
+* Recursivity fun
+* Graph traversal
+* Fast and Clean
