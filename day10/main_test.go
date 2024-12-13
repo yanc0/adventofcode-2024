@@ -19,17 +19,17 @@ func TestParseInput(t *testing.T) {
 
 	trailheads := topomap.FindTrailHeads()
 	Assert(len(trailheads) == 1)
-	Assert(trailheads[0].x == 0 && trailheads[0].y == 0)
+	Assert(trailheads[0].X == 0 && trailheads[0].Y == 0)
 }
 
 func TestCountReachableSummits(t *testing.T) {
 	topomap := parseInput(strings.NewReader(testInput))
-	summitsCount := topomap.ReachableSummits(Position{0, 0})
+	summitsCount := topomap.ReachableSummits(Position{X: 0, Y: 0})
 	Assert(summitsCount == 1)
 }
 
 func TestCountHikingTrails(t *testing.T) {
 	topomap := parseInput(strings.NewReader(testInput))
-	distinctHikingTrailsCount := topomap.CountDistinctHikingTrails(Position{0, 0})
+	distinctHikingTrailsCount := topomap.CountDistinctHikingTrails(Position{X: 0, Y: 0})
 	Assert(distinctHikingTrailsCount == 16)
 }

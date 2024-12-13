@@ -90,3 +90,12 @@
 - First part easily done the dumb way
 - Rewrite the recursive way for part 2
 - removing useless allocation and add cache
+
+
+### Day 12: Garden Groups
+
+[Story](https://adventofcode.com/2024/day/12)
+
+- I found the part 2 really hard
+- Code is ugly and not optimized
+- It works and I'm happy to have solved this one

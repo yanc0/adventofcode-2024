@@ -26,48 +26,6 @@ func main() {
 }
 
 type TopographicMap [][]int
-type Position struct {
-	x int
-	y int
-}
-
-func (p Position) String() string {
-	return fmt.Sprintf("%d|%d", p.x, p.y)
-}
-
-func (p Position) Up() Position {
-	return Position{
-		x: p.x - 1,
-		y: p.y,
-	}
-}
-
-func (p Position) Right() Position {
-	return Position{
-		x: p.x,
-		y: p.y + 1,
-	}
-}
-
-func (p Position) Down() Position {
-	return Position{
-		x: p.x + 1,
-		y: p.y,
-	}
-}
-
-func (p Position) Left() Position {
-	return Position{
-		x: p.x,
-		y: p.y - 1,
-	}
-}
-
-func (p Position) ExistsOn(t TopographicMap) bool {
-	xOutOfBand := p.x < 0 || p.x >= len(t)
-	yOutOfBand := p.y < 0 || p.y >= len(t)
-	return !xOutOfBand && !yOutOfBand
-}
 
 func parseInput(input io.Reader) TopographicMap {
 	topomap := make([][]int, 0)
@@ -91,7 +49,7 @@ func (t TopographicMap) FindTrailHeads() []Position {
 	for x := 0; x < len(t); x++ {
 		for y := 0; y < len(t); y++ {
 			if t[x][y] == 0 {
-				positions = append(positions, Position{x: x, y: y})
+				positions = append(positions, Position{X: x, Y: y})
 			}
 		}
 	}
@@ -123,16 +81,16 @@ func (t TopographicMap) MarkReachableSummits(starting Position, summits map[stri
 		return
 	}
 
-	if starting.Up().ExistsOn(t) && t.Elevation(starting.Up()) == t.Elevation(starting)+1 {
+	if starting.Up().ExistsOnMatrix(len(t)) && t.Elevation(starting.Up()) == t.Elevation(starting)+1 {
 		t.MarkReachableSummits(starting.Up(), summits)
 	}
-	if starting.Right().ExistsOn(t) && t.Elevation(starting.Right()) == t.Elevation(starting)+1 {
+	if starting.Right().ExistsOnMatrix(len(t)) && t.Elevation(starting.Right()) == t.Elevation(starting)+1 {
 		t.MarkReachableSummits(starting.Right(), summits)
 	}
-	if starting.Down().ExistsOn(t) && t.Elevation(starting.Down()) == t.Elevation(starting)+1 {
+	if starting.Down().ExistsOnMatrix(len(t)) && t.Elevation(starting.Down()) == t.Elevation(starting)+1 {
 		t.MarkReachableSummits(starting.Down(), summits)
 	}
-	if starting.Left().ExistsOn(t) && t.Elevation(starting.Left()) == t.Elevation(starting)+1 {
+	if starting.Left().ExistsOnMatrix(len(t)) && t.Elevation(starting.Left()) == t.Elevation(starting)+1 {
 		t.MarkReachableSummits(starting.Left(), summits)
 	}
 }
@@ -145,16 +103,16 @@ func (t TopographicMap) CountDistinctHikingTrails(starting Position) int {
 
 	countDistinctHikingTrails := 0
 
-	if starting.Up().ExistsOn(t) && t.Elevation(starting.Up()) == t.Elevation(starting)+1 {
+	if starting.Up().ExistsOnMatrix(len(t)) && t.Elevation(starting.Up()) == t.Elevation(starting)+1 {
 		countDistinctHikingTrails += t.CountDistinctHikingTrails(starting.Up())
 	}
-	if starting.Right().ExistsOn(t) && t.Elevation(starting.Right()) == t.Elevation(starting)+1 {
+	if starting.Right().ExistsOnMatrix(len(t)) && t.Elevation(starting.Right()) == t.Elevation(starting)+1 {
 		countDistinctHikingTrails += t.CountDistinctHikingTrails(starting.Right())
 	}
-	if starting.Down().ExistsOn(t) && t.Elevation(starting.Down()) == t.Elevation(starting)+1 {
+	if starting.Down().ExistsOnMatrix(len(t)) && t.Elevation(starting.Down()) == t.Elevation(starting)+1 {
 		countDistinctHikingTrails += t.CountDistinctHikingTrails(starting.Down())
 	}
-	if starting.Left().ExistsOn(t) && t.Elevation(starting.Left()) == t.Elevation(starting)+1 {
+	if starting.Left().ExistsOnMatrix(len(t)) && t.Elevation(starting.Left()) == t.Elevation(starting)+1 {
 		countDistinctHikingTrails += t.CountDistinctHikingTrails(starting.Left())
 	}
 
@@ -162,7 +120,7 @@ func (t TopographicMap) CountDistinctHikingTrails(starting Position) int {
 }
 
 func (t TopographicMap) Elevation(at Position) int {
-	Assert(at.ExistsOn(t))
+	Assert(at.ExistsOnMatrix(len(t)))
 
-	return t[at.x][at.y]
+	return t[at.X][at.Y]
 }
